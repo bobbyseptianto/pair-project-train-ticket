@@ -1,0 +1,32 @@
+<%- include("partials/head", {title: "Home"}); %>
+
+<div>
+  <h1>Welcome to BookMyTrain!</h1><br>
+</div>
+
+<div>
+  <h2>Login</h2>
+
+  <% if (error) { %>
+    <p style="color: red;"><%= error %></p>
+  <% } %>
+    
+  <form action="/" method="POST">
+
+    <label>Username</label><br>
+    <input type="text" name="username" placeholder="e.g. johndoe"><br><br>
+
+    <label>Password</label><br>
+    <input type="password" name="password" placeholder="e.g. johndoe123"><br><br>
+
+    <input type="submit" value="Login">
+
+  </form>
+</div><br><br>
+
+<div>
+  <h2>Belum punya akun? Register dulu!</h2>
+  <button><a href="/register">Register</a></button>
+</div>
+ 
+<%- include("partials/foot"); %>

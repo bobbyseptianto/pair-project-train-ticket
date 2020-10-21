@@ -1,0 +1,34 @@
+<%- include("partials/head", {title: "List Trains"}); %>
+
+<div>
+  <h1>List Trains</h1>
+  <h2><a href="/trains/add">Add Train</a></h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Train</th>
+        <th>Route</th>
+        <th>Departure</th>
+        <th>Arrived</th>
+        <th>Class</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% instanceTrain.forEach(train => { %>
+        <tr>
+          <td><%= train.train_name %></td>
+          <td><%= train.route %></td>
+          <td><%= train.depart_time %></td>
+          <td><%= train.arrived_time %></td>
+          <td><%= train.class_type %></td>
+          <td><%= train.newPrice %></td>
+          <td><a href="/trains/edit/<%= train.id %>">Edit</a> | <a href="/trains/delete/<%= train.id %>" onclick="return window.confirm('Delete This Train?');">Delete</a> | <a href="/trains/see-passengers/<%= train.id %>">See Passengers</a></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("partials/foot"); %>
