@@ -3,6 +3,12 @@
 <div>
   <h1>Add Train</h1>
 
+  <% if (message) { %>
+    <% message.forEach(el => { %>
+      <p style="color: red;"><%= el %></p>
+    <% }); %>
+  <% } %>
+
   <form action="/trains/add" method="POST">
   
     <label>Train Name</label><br>

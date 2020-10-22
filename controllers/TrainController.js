@@ -17,7 +17,9 @@ class TrainController {
   }
 
   static addTrainForm(req, res) {
-    res.render("addTrainForm");
+    const message = req.app.locals.message || '';
+    delete req.app.locals.message;
+    res.render("addTrainForm", {message});
   }
 
   static addTrain(req, res) {
@@ -35,7 +37,17 @@ class TrainController {
       res.redirect("/trains")
     })
     .catch((err) => {
-      res.send(err);
+      if(err.name === "SequelizeValidationError") {
+        if(err.errors.length > 0) {
+          let errors = err.errors.map(error => {
+            return error.message;
+          });
+          req.app.locals.message = errors;
+        }
+        res.redirect("/trains/add")
+      } else {
+        res.send(err);
+      }
     });
   }
 
@@ -45,7 +57,9 @@ class TrainController {
     Train.findByPk(id)
     .then((result) => {
       instanceTrain.push(result);
-      res.render("editTrainForm", {instanceTrain})
+      const message = req.app.locals.message || '';
+      delete req.app.locals.message;
+      res.render("editTrainForm", {instanceTrain, message})
     })
     .catch((err) => {
       res.send(err)
@@ -68,7 +82,17 @@ class TrainController {
       res.redirect("/trains");
     })
     .catch((err) => {
-      res.send(err);
+      if(err.name === "SequelizeValidationError") {
+        if(err.errors.length > 0) {
+          let errors = err.errors.map(error => {
+            return error.message;
+          });
+          req.app.locals.message = errors;
+        }
+        res.redirect(`/trains/edit/${id}`);
+      } else {
+        res.send(err);
+      }
     });
   }
 
@@ -79,6 +103,22 @@ class TrainController {
       res.redirect("/trains");
     }).catch((err) => {
       res.send(err);
+    });
+  }
+
+  static seePassengers(req, res) {
+    let id = +req.params.id;
+    let instanceTrain = [];
+    Train.findByPk(id)
+    .then((result) => {
+      instanceTrain.push(result);
+      return User.findAll({ include : BookTicket })
+    })
+    .then(user => {
+      res.render("seePassengers", {user, instanceTrain})
+    })
+    .catch((err) => {
+      res.send(err)
     });
   }
 

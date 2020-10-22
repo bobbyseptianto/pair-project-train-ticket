@@ -12,7 +12,7 @@
   <% } %>
   
   <h2>Email  : <%= user[0].email %></h2>
-  <h2>Address : <%= user[0].address %></h2><br><br>
+  <h2>Address : <%= user[0].address %></h2><br>
 
   <h3>Your Ticket Summary :</h3>
   <table border="1">
@@ -46,7 +46,7 @@
               <td><%= el1.estimation %></td>
               <td><%= el1.class_type %></td>
               <td><%= el1.newPrice %></td>
-              <td><a href="">Refund</a> | <a href="">E-Ticket</a></td>
+              <td><a href="/users/<%= user[0].id %>/my-ticket/<%= el2.id %>">E-Ticket</a></td>
             </tr>
           <% } %>
         <% }); %>

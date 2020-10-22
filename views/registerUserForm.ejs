@@ -3,6 +3,12 @@
 <div>
   <h1>Register</h1>
 
+  <% if (message) { %>
+    <% message.forEach(el => { %>
+      <p style="color: red;"><%= el %></p>
+    <% }); %>
+  <% } %>
+
   <form action="/register" method="POST">
   
     <label>First Name</label><br>
@@ -25,7 +31,7 @@
     <input type="radio" name="gender" value="Male">Male
     <br><br>
 
-    <label>Addres</label><br>
+    <label>Address</label><br>
     <textarea name="address" rows="4" cols="50" placeholder="e.g: Jl. Rambutan 99, Jakarta"></textarea><br><br>
 
     <input type="submit" value="Submit">
