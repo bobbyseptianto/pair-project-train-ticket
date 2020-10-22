@@ -1,5 +1,6 @@
-const { User } = require("../models/index");
+const { User, Train, BookTicket } = require("../models/index");
 const bcrypt = require('bcryptjs');
+const formatMoney = require("../helpers/formatMoney");
 
 class UserController {
 
@@ -64,6 +65,89 @@ class UserController {
     User.findOne({ where : {id} })
     .then((user) => {
       res.render("users", {user})
+    }).catch((err) => {
+      res.send(err);
+    });
+  }
+
+  static showUserProfile(req, res) {
+    let id = +req.params.id;
+    User.findOne({where: {id}})
+    .then((user) => {
+      res.render("profile", {user});
+    }).catch((err) => {
+      res.send(err);
+    });
+  }
+
+  static editProfileForm(req, res) {
+    let id = +req.params.id;
+    let user = [];
+    User.findByPk(id)
+    .then((result) => {
+      user.push(result);
+      res.render("editProfileForm", {user})
+    })
+    .catch((err) => {
+      res.send(err)
+    });
+  }
+
+  static editProfile(req, res) {
+    let id = +req.params.id;
+    const {first_name, last_name, email, gender, address} = req.body;
+    let userObj = {
+      first_name,
+      last_name,
+      email,
+      gender,
+      address
+    }
+    User.update(userObj, { where : { id : id } })
+    .then((user) => {
+      res.redirect(`/users/${id}/profile`);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+  }
+
+  static deleteProfileAccount(req, res) {
+    let id = +req.params.id;
+    User.destroy({ where : { id : id } })
+    .then((user) => {
+      res.redirect("/logout");
+    }).catch((err) => {
+      res.send(err);
+    });
+  }
+
+  static bookTicketForm(req, res) {
+    let id = +req.params.id;
+    let user = [];
+    User.findByPk(id)
+    .then((result) => {
+      user.push(result);
+      res.render("bookTicket", {user})
+    })
+    .catch((err) => {
+      res.send(err)
+    });
+  }
+
+  static bookTicket(req, res) {
+    let UserId = +req.params.id;
+    const {depart_date, from, to, class_type} = req.body;
+    let bookTicketObj = {
+      depart_date,
+      from,
+      to,
+      class_type,
+      UserId
+    }
+    BookTicket.create(bookTicketObj)
+    .then((bookTicket) => {
+      res.render("findTrain", {bookTicket})
     }).catch((err) => {
       res.send(err);
     });
