@@ -5,6 +5,12 @@
 
   <h2><a href="/users/<%= user[0].id %>">Back</a></h2>
 
+  <% if (message) { %>
+    <% message.forEach(el => { %>
+      <p style="color: red;"><%= el %></p>
+    <% }); %>
+  <% } %>
+
   <form action="/users/<%= user[0].id %>/book-ticket" method="POST">
 
     <label>Departure Date</label><br>

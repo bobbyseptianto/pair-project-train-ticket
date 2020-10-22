@@ -6,7 +6,9 @@ const estimation = require("../helpers/estimationTravelTime");
 class UserController {
 
   static registerForm(req, res) {
-    res.render("registerUserForm")
+    const message = req.app.locals.message || '';
+    delete req.app.locals.message;
+    res.render("registerUserForm", {message})
   }
 
   static register(req, res) {
@@ -24,7 +26,17 @@ class UserController {
     .then((result) => {
       res.redirect("/")
     }).catch((err) => {
-      res.send(err)
+      if(err.name === "SequelizeValidationError") {
+        if(err.errors.length > 0) {
+          let errors = err.errors.map(error => {
+            return error.message;
+          });
+          req.app.locals.message = errors;
+        }
+        res.redirect("/register")
+      } else {
+        res.send(err);
+      }
     });
   }
 
@@ -87,7 +99,9 @@ class UserController {
     User.findByPk(id)
     .then((result) => {
       user.push(result);
-      res.render("editProfileForm", {user})
+      const message = req.app.locals.message || '';
+      delete req.app.locals.message;
+      res.render("editProfileForm", {user, message})
     })
     .catch((err) => {
       res.send(err)
@@ -109,7 +123,17 @@ class UserController {
       res.redirect(`/users/${id}/profile`);
     })
     .catch((err) => {
-      res.send(err);
+      if(err.name === "SequelizeValidationError") {
+        if(err.errors.length > 0) {
+          let errors = err.errors.map(error => {
+            return error.message;
+          });
+          req.app.locals.message = errors;
+        }
+        res.redirect(`/users/${id}/profile/edit`)
+      } else {
+        res.send(err);
+      }
     });
   }
 
@@ -135,7 +159,9 @@ class UserController {
       for (let i = 0; i < instanceTrain.length; i++) {
         instanceTrain[i]["newPrice"] = formatMoney(instanceTrain[i].price);
       }
-      res.render("bookTicket", {user, instanceTrain})
+      const message = req.app.locals.message || '';
+      delete req.app.locals.message;
+      res.render("bookTicket", {user, instanceTrain, message})
     })
     .catch((err) => {
       res.send(err)
@@ -157,7 +183,17 @@ class UserController {
     .then((bookTicket) => {
       res.redirect(`/users/${UserId}/my-ticket`);
     }).catch((err) => {
-      res.send(err);
+      if(err.name === "SequelizeValidationError") {
+        if(err.errors.length > 0) {
+          let errors = err.errors.map(error => {
+            return error.message;
+          });
+          req.app.locals.message = errors;
+        }
+        res.redirect(`/users/${UserId}/book-ticket`)
+      } else {
+        res.send(err);
+      }
     });
   }
 
@@ -179,6 +215,10 @@ class UserController {
     .catch((err) => {
       res.send(err)
     });
+  }
+
+  static eticket(req, res) {
+    res.send(`E-Ticket has been sent to your email!`);
   }
 
 }

@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, ValidationError
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Train extends Model {
@@ -20,12 +20,70 @@ module.exports = (sequelize, DataTypes) => {
 
   };
   Train.init({
-    train_name: DataTypes.STRING,
-    route: DataTypes.STRING,
-    depart_time: DataTypes.STRING,
-    arrived_time: DataTypes.STRING,
-    class_type: DataTypes.STRING,
-    price: DataTypes.INTEGER
+    train_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Train name is required!'
+        }
+      }
+    },
+    route: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Route is required!'
+        }
+      }
+    },
+    depart_time: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Depart time is required!'
+        }
+      }
+    },
+    arrived_time: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Arrived time is required!'
+        }
+      }
+    },
+    class_type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Class type is required!'
+        }
+      }
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Price is required!'
+        },
+        isNumeric: {
+          args: true,
+          msg: 'Price must be an integer!'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Train',

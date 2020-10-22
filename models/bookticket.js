@@ -3,8 +3,6 @@ const {
   Model
 } = require('sequelize');
 
-const generateSerial = require("../helpers/bookingCodeGenerator");
-
 module.exports = (sequelize, DataTypes) => {
   class BookTicket extends Model {
     /**
@@ -17,16 +15,48 @@ module.exports = (sequelize, DataTypes) => {
       BookTicket.belongsTo(models.Train, {foreignKey: "TrainId"})
       BookTicket.belongsTo(models.User, {foreignKey: "UserId"})
     }
+
+    static generateSerial() {
+      var chars = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        serialLength = 5,
+        randomSerial = "",
+        i,
+        randomNumber;
+      for (i = 0; i < serialLength; i = i + 1) {
+        randomNumber = Math.floor(Math.random() * chars.length);
+        randomSerial += chars.substring(randomNumber, randomNumber + 1);
+      }
+      return randomSerial;
+    }
+
   };
   BookTicket.init({
-    depart_date: DataTypes.STRING,
-    TrainId: DataTypes.INTEGER,
+    depart_date: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Departure date is required!'
+        }
+      }
+    },
+    TrainId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isNumeric: {
+          args: true,
+          msg: 'Please select a train!'
+        }
+      }
+    },
     UserId: DataTypes.INTEGER,
     booking_code: DataTypes.STRING
   }, {
     hooks: {
       beforeCreate(instance, options) {
-        instance.booking_code = generateSerial();
+        instance.booking_code = this.generateSerial();
       }
     },
     sequelize,

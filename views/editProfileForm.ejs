@@ -3,6 +3,12 @@
 <div>
   <h1>Edit Profile</h1>
 
+  <% if (message) { %>
+    <% message.forEach(el => { %>
+      <p style="color: red;"><%= el %></p>
+    <% }); %>
+  <% } %>
+
   <form action="/users/<%= user[0].id %>/profile/edit" method="POST">
   
     <label>First Name</label><br>
