@@ -1,0 +1,31 @@
+<%- include("partials/head", {title: "Book Train"}); %>
+
+<div>
+  <h1>Book Train Ticket</h1>
+
+  <form action="/users/<%= user[0].id %>/book-ticket" method="POST">
+
+    <label>Departure Date</label><br>
+    <input type="date" name="depart_date"><br><br>
+  
+    <label>From</label><br>
+    <input type="text" name="from" placeholder="e.g: JKT"><br><br>
+
+    <label>To</label><br>
+    <input type="text" name="to" placeholder="e.g: BDG"><br><br>
+
+    <label>Class</label><br>
+    <select name="class_type">
+      <option value="">--SELECT--</option>
+      <option value="Economy">Economy</option>
+      <option value="Executive">Executive</option>
+    </select><br><br>
+
+    <input type="submit" value="Find">
+    <button type="button" value="Cancel"><a href="/users/<%= user[0].id %>">Cancel</a></button>
+
+  </form><br><br>
+
+</div>
+
+<%- include("partials/foot"); %>

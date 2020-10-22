@@ -1,4 +1,4 @@
-const { Train } = require("../models/index");
+const { Train, User, BookTicket } = require("../models/index");
 const formatMoney = require("../helpers/formatMoney");
 
 class TrainController {
