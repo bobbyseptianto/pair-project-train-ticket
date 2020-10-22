@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "bobbyseptianto",
-    "password": "postgres",
+    "username": "postgres",
+    "password": "admin",
     "database": "pair-project-train-ticket-db",
     "host": "localhost",
     "dialect": "postgres"
