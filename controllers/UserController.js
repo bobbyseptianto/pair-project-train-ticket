@@ -32,6 +32,9 @@ class UserController {
     .then((user) => {
       if (user) {
         if (bcrypt.compareSync(password, user.password)) {
+
+          req.session.UserId = user.id;
+
           return res.redirect(`/users/${user.id}`);
         } else {
           const error = `Invalid Username/Password!`;
@@ -46,6 +49,16 @@ class UserController {
     });
   }
 
+  static logout(req, res) {
+    req.session.destroy((err) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.redirect("/");
+      }
+    })
+  }
+
   static showUserLogin(req, res) {
     const id = +req.params.id;
     User.findOne({ where : {id} })
@@ -54,7 +67,6 @@ class UserController {
     }).catch((err) => {
       res.send(err);
     });
-    
   }
 
 }
