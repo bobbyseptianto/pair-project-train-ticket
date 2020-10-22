@@ -46,7 +46,7 @@
               <td><%= el1.estimation %></td>
               <td><%= el1.class_type %></td>
               <td><%= el1.newPrice %></td>
-              <td><a href="/users/<%= user[0].email %>">E-Ticket</a></td>
+              <td><a href="/users/<%= user[0].id %>/my-ticket/eticket/<%= user[0].email %>-<%= el2.id %>" onclick="return alert('Your E-Ticket has been sent to your email!')">E-Ticket</a></td>
             </tr>
           <% } %>
         <% }); %>

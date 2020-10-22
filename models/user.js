@@ -5,6 +5,8 @@ const {
 
 const bcrypt = require('bcryptjs');
 
+var nodemailer = require('nodemailer');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -103,10 +105,41 @@ module.exports = (sequelize, DataTypes) => {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(instance.password, salt);
         instance.password = hash;
+      },
+      afterCreate(instance, options) {
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'bookmytrainxxx@gmail.com',
+            pass: 'bookmytrain99'
+          }
+        });
+        
+        var mailOptions = {
+          from: 'bookmytrainxxx@gmail.com',
+          to: instance.email,
+          subject: 'Account Register Success',
+          text: `
+          Akun BookMyTrain kamu berhasil dibuat!
+
+          Jangn beritahu data ini kepada siapapun!
+          USERNAME : ${instance.username};
+          PASSWORD : ${instance.password};
+          `
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
       }
     },
     sequelize,
     modelName: 'User',
   });
+
   return User;
 };

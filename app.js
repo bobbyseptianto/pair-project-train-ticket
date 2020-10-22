@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const router = require("./routers/router");
 const session = require('express-session');
-const PORT = 3000;
+const PORT = 3010;
 
 // Setup
 app.set("view engine", "ejs");

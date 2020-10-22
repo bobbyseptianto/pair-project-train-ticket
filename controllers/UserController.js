@@ -1,8 +1,9 @@
 const { User, Train, BookTicket } = require("../models/index");
-// const nodemailer = require("nodemailer");
 const bcrypt = require('bcryptjs');
 const formatMoney = require("../helpers/formatMoney");
 const estimation = require("../helpers/estimationTravelTime");
+
+var nodemailer = require('nodemailer');
 
 class UserController {
 
@@ -219,7 +220,51 @@ class UserController {
   }
 
   static eticket(req, res) {
-    res.send(`E-Ticket has been sent to your email!`);
+    let paramsEmailId = req.params.emailid.split('-');
+    let email = paramsEmailId[0];
+    let bookTicketId = paramsEmailId[1];
+    BookTicket.findOne({where:{id: bookTicketId}, include: [Train]})
+    .then((result) => {
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'bookmytrainxxx@gmail.com',
+          pass: 'bookmytrain99'
+        }
+      });
+      
+      var mailOptions = {
+        from: 'bookmytrainxxx@gmail.com',
+        to: email,
+        subject: 'E-TICKET',
+        text: `
+        THIS IS YOUR E-TICKET
+
+        Booking Code : ${result.booking_code}
+
+        DATE : ${result.depart_date}
+        ROUTE: ${result.Train.route}
+        TRAIN: ${result.Train.train_name}
+        DPT  : ${result.Train.depart_time}
+        ETA  : ${result.Train.arrived_time}
+        CLASS: ${result.Train.class_type}
+        PRICE: ${result.Train.price}
+
+        Bayar tiketmu maksimum 24 Jam setelah email ini diterima!
+        `
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      res.redirect(`/users/${result.UserId}/my-ticket`);
+    }).catch((err) => {
+      res.send(err);
+    });
   }
 
 }
