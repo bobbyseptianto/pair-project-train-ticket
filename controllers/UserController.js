@@ -1,4 +1,5 @@
 const { User, Train, BookTicket } = require("../models/index");
+// const nodemailer = require("nodemailer");
 const bcrypt = require('bcryptjs');
 const formatMoney = require("../helpers/formatMoney");
 const estimation = require("../helpers/estimationTravelTime");
