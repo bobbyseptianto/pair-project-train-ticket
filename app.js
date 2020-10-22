@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const router = require("./routers/router");
 const session = require('express-session');
-const PORT = 3010;
+const port = process.env.PORT || 4000;
 
 // Setup
 app.set("view engine", "ejs");
@@ -25,6 +25,6 @@ app.use(session({
 app.use("/", router);
 
 // Listen
-app.listen(PORT, () => {
-  console.log(`Visit Book My Train at http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server Starts on ${port}`);
 });
