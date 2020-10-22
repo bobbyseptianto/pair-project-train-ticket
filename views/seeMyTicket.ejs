@@ -1,0 +1,58 @@
+<%- include("partials/head", {title: "List My Trains"}); %>
+
+<div>
+  <h1>My Booking Tickets</h1>
+
+  <h2><a href="/users/<%= user[0].id %>">Back</a></h2>
+
+  <% if (user[0].gender === 'Male') { %>
+    <h2>Nama   : Mr. <%= user[0].fullName %></h2>
+  <% } else { %>
+    <h2>Nama   : Ms. <%= user[0].fullName %></h2>
+  <% } %>
+  
+  <h2>Email  : <%= user[0].email %></h2>
+  <h2>Address : <%= user[0].address %></h2><br>
+
+  <h3>Your Ticket Summary :</h3>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Booking Code</th>
+        <th>Train</th>
+        <th>Date</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Departure</th>
+        <th>Arrived</th>
+        <th>Estimation Travel Time</th>
+        <th>Class</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% instanceTrain.forEach(el1 => { %>
+        <% el1.BookTickets.forEach(el2 => { %>
+          <% if (el1.BookTickets.length !== 0 && user[0].id === el2.UserId) { %>
+            <tr>
+              <td><%= el2.booking_code %></td>
+              <td><%= el2.depart_date %></td>
+              <td><%= el1.train_name %></td>
+              <td><%= el1.separateRoute[0] %></td>
+              <td><%= el1.separateRoute[1] %></td>
+              <td><%= el1.depart_time %></td>
+              <td><%= el1.arrived_time %></td>
+              <td><%= el1.estimation %></td>
+              <td><%= el1.class_type %></td>
+              <td><%= el1.newPrice %></td>
+              <td><a href="/users/<%= user[0].id %>/my-ticket/eticket/<%= user[0].email %>-<%= el2.id %>" onclick="return alert('Your E-Ticket has been sent to your email!')">E-Ticket</a></td>
+            </tr>
+          <% } %>
+        <% }); %>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("partials/foot"); %>

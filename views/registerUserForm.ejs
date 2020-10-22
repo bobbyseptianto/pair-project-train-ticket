@@ -1,0 +1,43 @@
+<%- include("partials/head", {title: "Add Cast"}); %>
+
+<div>
+  <h1>Register</h1>
+
+  <% if (message) { %>
+    <% message.forEach(el => { %>
+      <p style="color: red;"><%= el %></p>
+    <% }); %>
+  <% } %>
+
+  <form action="/register" method="POST">
+  
+    <label>First Name</label><br>
+    <input type="text" name="first_name" placeholder="e.g: John"><br><br>
+
+    <label>Last Name</label><br>
+    <input type="text" name="last_name" placeholder="e.g: Doe"><br><br>
+
+    <label>Username</label><br>
+    <input type="text" name="username" placeholder="e.g: johndoe"><br><br>
+
+    <label>Password</label><br>
+    <input type="text" name="password" placeholder="e.g: johndoe123"><br><br>
+
+    <label>Email</label><br>
+    <input type="email" name="email" placeholder="e.g: johndoe@email.com"><br><br>
+
+    <label>Gender</label><br>
+    <input type="radio" name="gender" value="Female">Female<br>
+    <input type="radio" name="gender" value="Male">Male
+    <br><br>
+
+    <label>Address</label><br>
+    <textarea name="address" rows="4" cols="50" placeholder="e.g: Jl. Rambutan 99, Jakarta"></textarea><br><br>
+
+    <input type="submit" value="Submit">
+    <button type="button" value="Cancel"><a href="/">Cancel</a></button>
+
+  </form>
+</div>
+
+<%- include("partials/foot"); %>

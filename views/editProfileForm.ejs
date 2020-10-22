@@ -1,0 +1,37 @@
+<%- include("partials/head", {title: "Edit Profile"}); %>
+
+<div>
+  <h1>Edit Profile</h1>
+
+  <% if (message) { %>
+    <% message.forEach(el => { %>
+      <p style="color: red;"><%= el %></p>
+    <% }); %>
+  <% } %>
+
+  <form action="/users/<%= user[0].id %>/profile/edit" method="POST">
+  
+    <label>First Name</label><br>
+    <input type="text" name="first_name" placeholder="e.g: John" value="<%= user[0].first_name %>"><br><br>
+
+    <label>Last Name</label><br>
+    <input type="text" name="last_name" placeholder="e.g: Doe" value="<%= user[0].last_name %>"><br><br>
+
+    <label>Email</label><br>
+    <input type="email" name="email" placeholder="e.g: johndoe@email.com" value="<%= user[0].email %>"><br><br>
+
+    <label>Gender</label><br>
+    <input type="radio" name="gender" value="Female" <% if (user[0].gender === 'Female') { %> checked <% } %>>Female<br>
+    <input type="radio" name="gender" value="Male" <% if (user[0].gender === 'Male') { %> checked <% } %>>Male
+    <br><br>
+
+    <label>Address</label><br>
+    <textarea name="address" rows="4" cols="50" placeholder="e.g: Jl. Rambutan 99, Jakarta"><%= user[0].address %></textarea><br><br>
+
+    <input type="submit" value="Edit">
+    <button type="button" value="Cancel"><a href="/users/<%= user[0].id %>/profile">Cancel</a></button>
+
+  </form>
+</div>
+
+<%- include("partials/foot"); %>

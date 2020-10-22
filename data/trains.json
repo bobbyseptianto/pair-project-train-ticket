@@ -1,0 +1,34 @@
+[
+  {
+    "train_name": "Argo Parahyangan 1A",
+    "route": "JKT-BDG",
+    "depart_time": "07:50",
+    "arrived_time": "10:55",
+    "class_type": "Economy",
+    "price": 85000
+  },
+  {
+    "train_name": "Argo Parahyangan 1B",
+    "route": "JKT-BDG",
+    "depart_time": "15:40",
+    "arrived_time": "18:30",
+    "class_type": "Executive",
+    "price": 120000
+  },
+  {
+    "train_name": "Argo Parahyangan 1C",
+    "route": "BDG-JKT",
+    "depart_time": "06:05",
+    "arrived_time": "09:19",
+    "class_type": "Economy",
+    "price": 85000
+  },
+  {
+    "train_name": "Argo Parahyangan 1D",
+    "route": "BDG-JKT",
+    "depart_time": "16:00",
+    "arrived_time": "19:14",
+    "class_type": "Executive",
+    "price": 120000
+  }
+]

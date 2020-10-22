@@ -1,0 +1,42 @@
+<%- include("partials/head", {title: "Add Train"}); %>
+
+<div>
+  <h1>Add Train</h1>
+
+  <% if (message) { %>
+    <% message.forEach(el => { %>
+      <p style="color: red;"><%= el %></p>
+    <% }); %>
+  <% } %>
+
+  <form action="/trains/add" method="POST">
+  
+    <label>Train Name</label><br>
+    <input type="text" name="train_name" placeholder="e.g: Cirex Express 7B"><br><br>
+
+    <label>Route</label><br>
+    <input type="text" name="route" placeholder="e.g: TGL-SMG"><br><br>
+
+    <label>Departure Time</label><br>
+    <input type="time" name="depart_time"><br><br>
+
+    <label>Arrived Time</label><br>
+    <input type="time" name="arrived_time"><br><br>
+
+    <label>Class</label><br>
+    <select name="class_type">
+      <option value="">--SELECT--</option>
+      <option value="Economy">Economy</option>
+      <option value="Executive">Executive</option>
+    </select><br><br>
+
+    <label>Price</label><br>
+    <input type="text" name="price" placeholder="e.g: 150000"><br><br>
+
+    <input type="submit" value="Add">
+    <button type="button" value="Cancel"><a href="/trains">Cancel</a></button>
+
+  </form>
+</div>
+
+<%- include("partials/foot"); %>

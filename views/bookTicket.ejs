@@ -1,0 +1,34 @@
+<%- include("partials/head", {title: "Book Train"}); %>
+
+<div>
+  <h1>Book Train Ticket</h1>
+
+  <h2><a href="/users/<%= user[0].id %>">Back</a></h2>
+
+  <% if (message) { %>
+    <% message.forEach(el => { %>
+      <p style="color: red;"><%= el %></p>
+    <% }); %>
+  <% } %>
+
+  <form action="/users/<%= user[0].id %>/book-ticket" method="POST">
+
+    <label>Departure Date</label><br>
+    <input type="date" name="depart_date"><br><br>
+
+    <label>List Train</label><br>
+    <select name="TrainId">
+        <option value="">--SELECT--</option>
+        <% instanceTrain.forEach(el => { %>
+          <option value="<%= el.id %>"><%= el.train_name %>, <%= el.route %>, <%= el.depart_time %>-<%= el.arrived_time %>, <%= el.class_type %>, <%= el.newPrice %></option>
+        <% }); %>
+    </select><br><br>
+
+    <input type="submit" value="Booking">
+    <button type="button" value="Cancel"><a href="/users/<%= user[0].id %>">Cancel</a></button>
+
+  </form><br><br>
+
+</div>
+
+<%- include("partials/foot"); %>

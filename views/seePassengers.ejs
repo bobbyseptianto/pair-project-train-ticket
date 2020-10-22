@@ -1,0 +1,34 @@
+<%- include("partials/head", {title: "List Passengers"}); %>
+
+<div>
+  <h1>List Passengers</h1>
+
+  <h2><a href="/trains">Back</a></h2>
+
+  
+      <% user.forEach(el1 => { %>
+        <% el1.BookTickets.forEach(el2 => { %>
+          <% if (el1.BookTickets.length !== 0 && instanceTrain[0].id === el2.TrainId) { %>
+            <h3>Date: <%= el2.depart_date %></h3>
+            <table border="1">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><%= el1.fullName %></td>
+                  <td><%= el1.address %></td>
+                  <td><%= el1.email %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <% } %>
+        <% }); %>
+      <% }); %>
+
+<%- include("partials/foot"); %>

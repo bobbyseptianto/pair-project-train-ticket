@@ -1,0 +1,42 @@
+<%- include("partials/head", {title: "Edit Train"}); %>
+
+<div>
+  <h1>Edit Train</h1>
+
+  <% if (message) { %>
+    <% message.forEach(el => { %>
+      <p style="color: red;"><%= el %></p>
+    <% }); %>
+  <% } %>
+
+  <form action="/trains/edit/<%= instanceTrain[0].id %>" method="POST">
+  
+    <label>Train Name</label><br>
+    <input type="text" name="train_name" placeholder="e.g: Cirex Express 7B" value="<%= instanceTrain[0].train_name %>"><br><br>
+
+    <label>Route</label><br>
+    <input type="text" name="route" placeholder="e.g: TGL-SMG" value="<%= instanceTrain[0].route %>"><br><br>
+
+    <label>Departure Time</label><br>
+    <input type="time" name="depart_time" value="<%= instanceTrain[0].depart_time %>"><br><br>
+
+    <label>Arrived Time</label><br>
+    <input type="time" name="arrived_time" value="<%= instanceTrain[0].arrived_time %>"><br><br>
+
+    <label>Class</label><br>
+    <select name="class_type">
+      <option value="">--SELECT--</option>
+      <option value="Economy" <% if (instanceTrain[0].class_type === 'Economy') { %> selected <% } %>>Economy</option>
+      <option value="Executive" <% if (instanceTrain[0].class_type === 'Executive') { %> selected <% } %>>Executive</option>
+    </select><br><br>
+
+    <label>Price</label><br>
+    <input type="text" name="price" placeholder="e.g: 150000" value="<%= instanceTrain[0].price %>"><br><br>
+
+    <input type="submit" value="Edit">
+    <button type="button" value="Cancel"><a href="/trains">Cancel</a></button>
+
+  </form>
+</div>
+
+<%- include("partials/foot"); %>
