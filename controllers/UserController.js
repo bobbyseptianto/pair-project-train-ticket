@@ -1,6 +1,7 @@
 const { User, Train, BookTicket } = require("../models/index");
 const bcrypt = require('bcryptjs');
 const formatMoney = require("../helpers/formatMoney");
+const estimation = require("../helpers/estimationTravelTime");
 
 class UserController {
 
@@ -128,7 +129,13 @@ class UserController {
     User.findByPk(id)
     .then((result) => {
       user.push(result);
-      res.render("bookTicket", {user})
+      return Train.findAll({ order : [["train_name", "ASC"]] })
+    })
+    .then((instanceTrain) => {
+      for (let i = 0; i < instanceTrain.length; i++) {
+        instanceTrain[i]["newPrice"] = formatMoney(instanceTrain[i].price);
+      }
+      res.render("bookTicket", {user, instanceTrain})
     })
     .catch((err) => {
       res.send(err)
@@ -137,19 +144,40 @@ class UserController {
 
   static bookTicket(req, res) {
     let UserId = +req.params.id;
-    const {depart_date, from, to, class_type} = req.body;
+    const {depart_date, from, to, class_type, TrainId} = req.body;
     let bookTicketObj = {
       depart_date,
       from,
       to,
       class_type,
-      UserId
+      UserId,
+      TrainId
     }
     BookTicket.create(bookTicketObj)
     .then((bookTicket) => {
-      res.render("findTrain", {bookTicket})
+      res.redirect(`/users/${UserId}/my-ticket`);
     }).catch((err) => {
       res.send(err);
+    });
+  }
+
+  static showMyTicket(req, res) {
+    let id = +req.params.id;
+    let user = [];
+    User.findByPk(id)
+    .then((result) => {
+      user.push(result);
+      return Train.findAll({order: [["train_name", "ASC"]], include: [BookTicket]});
+    })
+    .then((instanceTrain) => {
+      for (let i = 0; i < instanceTrain.length; i++) {
+        instanceTrain[i]["newPrice"] = formatMoney(instanceTrain[i].price);
+        instanceTrain[i]["estimation"] = estimation(instanceTrain[i].arrived_time, instanceTrain[i].depart_time);
+      }
+      res.render("seeMyTicket", {user, instanceTrain})
+    })
+    .catch((err) => {
+      res.send(err)
     });
   }
 

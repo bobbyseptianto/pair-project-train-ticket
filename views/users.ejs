@@ -1,7 +1,7 @@
 <%- include("partials/head", {title: "Home"}); %>
 
 <div>
-  <h1>Hello! <%= user.first_name + ' ' + user.last_name %></h1>
+  <h1>Hello! <%= user.fullName %></h1>
   <h2><a href="/users/<%= user.id %>/profile">My Profile</a></h2>
   <h2><a href="/users/<%= user.id %>/book-ticket">Book Ticket</a></h2>
   <h2><a href="/users/<%= user.id %>/my-ticket">See My Ticket</a></h2>

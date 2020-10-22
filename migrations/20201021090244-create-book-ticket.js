@@ -8,12 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      from: {
-        type: Sequelize.STRING
-      },
-      to: {
-        type: Sequelize.STRING
-      },
       depart_date: {
         type: Sequelize.STRING
       },
@@ -30,6 +24,9 @@ module.exports = {
           model: 'Users', // name of Target model
           key: 'id', // key in Target model that we're referencing
         }
+      },
+      booking_code: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

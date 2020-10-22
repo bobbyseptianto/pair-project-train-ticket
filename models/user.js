@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.BookTicket, {foreignKey: "UserId"})
     }
+
+    get fullName() {
+      return `${this.first_name} ${this.last_name}`;
+    }
+
   };
   User.init({
     first_name: DataTypes.STRING,

@@ -2,6 +2,9 @@
 const {
   Model
 } = require('sequelize');
+
+const generateSerial = require("../helpers/bookingCodeGenerator");
+
 module.exports = (sequelize, DataTypes) => {
   class BookTicket extends Model {
     /**
@@ -16,14 +19,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   BookTicket.init({
-    from: DataTypes.STRING,
-    to: DataTypes.STRING,
     depart_date: DataTypes.STRING,
     TrainId: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    booking_code: DataTypes.STRING
   }, {
+    hooks: {
+      beforeCreate(instance, options) {
+        instance.booking_code = generateSerial();
+      }
+    },
     sequelize,
     modelName: 'BookTicket',
   });
+
   return BookTicket;
 };

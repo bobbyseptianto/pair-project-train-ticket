@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Train.hasMany(models.BookTicket, {foreignKey: "TrainId"})
     }
+
+    get separateRoute() {
+      return this.route.split('-');
+    }
+
   };
   Train.init({
     train_name: DataTypes.STRING,

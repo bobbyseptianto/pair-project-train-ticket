@@ -7,7 +7,8 @@
     <thead>
       <tr>
         <th>Train</th>
-        <th>Route</th>
+        <th>From</th>
+        <th>To</th>
         <th>Departure</th>
         <th>Arrived</th>
         <th>Class</th>
@@ -19,7 +20,8 @@
       <% instanceTrain.forEach(train => { %>
         <tr>
           <td><%= train.train_name %></td>
-          <td><%= train.route %></td>
+          <td><%= train.separateRoute[0] %></td>
+          <td><%= train.separateRoute[1] %></td>
           <td><%= train.depart_time %></td>
           <td><%= train.arrived_time %></td>
           <td><%= train.class_type %></td>
