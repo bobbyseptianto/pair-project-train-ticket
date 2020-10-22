@@ -9,6 +9,6 @@ router.post("/:id/profile/edit", UserController.editProfile)
 router.get("/:id/profile/delete", UserController.deleteProfileAccount)
 router.get("/:id/book-ticket", UserController.bookTicketForm)
 router.post("/:id/book-ticket", UserController.bookTicket)
-// router.get("/:id/my-ticket", UserController.showMyTicket)
+router.get("/:id/my-ticket", UserController.showMyTicket)
 
 module.exports = router;
